@@ -27,7 +27,7 @@ async def analyze_pregnancy(info: DiagnosticInput):
         "- 1 practical recommendation.\n\n"
         "Patient Info:\n"
         f"{formatted_data}\n\n"
-        "Use a clinical yet caring tone. Be concise."
+        "Use a clinical yet caring tone. Be concise.keep the answer Humanise."
     )
 
     # Call Gemini API
