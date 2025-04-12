@@ -1,10 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any
 import requests
 import os
 
 app = FastAPI()
+
+# Enable CORS for all origins (you can restrict it if needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace with ["https://your-frontend.com"] in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Gemini API Key from Render environment variable
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -16,10 +26,8 @@ class DiagnosticInput(BaseModel):
 
 @app.post("/analyze")
 async def analyze_pregnancy(info: DiagnosticInput):
-    # Convert input into readable format
     formatted_data = "\n".join([f"{key.replace('_', ' ').title()}: {value}" for key, value in info.data.items()])
 
-    # Structured, pregnancy-specific prompt
     prompt = (
         "Summarize the following pregnancy-related medical data in under 100 words. Include:\n"
         "- 1 key insight,\n"
@@ -27,10 +35,9 @@ async def analyze_pregnancy(info: DiagnosticInput):
         "- 1 practical recommendation.\n\n"
         "Patient Info:\n"
         f"{formatted_data}\n\n"
-        "Use a clinical yet caring tone. Be concise.keep the answer Humanise."
+        "Use a clinical yet caring tone. Be concise. Keep the answer humanized."
     )
 
-    # Call Gemini API
     payload = {"contents": [{"parts": [{"text": prompt}]}]}
     response = requests.post(GEMINI_URL, json=payload)
 
