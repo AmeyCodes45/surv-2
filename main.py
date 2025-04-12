@@ -8,7 +8,7 @@ app = FastAPI()
 
 # Gemini API Key from Render environment variable
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta1/models/gemini-pro:generateContent?key={GEMINI_API_KEY}"
+GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 
 # Model for receiving dynamic form inputs
 class DiagnosticInput(BaseModel):
