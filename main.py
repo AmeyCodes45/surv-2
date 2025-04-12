@@ -21,14 +21,13 @@ async def analyze_pregnancy(info: DiagnosticInput):
 
     # Structured, pregnancy-specific prompt
     prompt = (
-        "The following is a medical case summary of a pregnant woman based on recent health inputs. "
-        "Please carefully analyze the data and provide:\n"
-        "• a concise medical insight,\n"
-        "• any potential risks or complications to watch for,\n"
-        "• and a clear, personalized medical recommendation for her well-being.\n\n"
-        "Patient Information:\n"
+        "Summarize the following pregnancy-related medical data in under 100 words. Include:\n"
+        "- 1 key insight,\n"
+        "- 1 major risk (if any),\n"
+        "- 1 practical recommendation.\n\n"
+        "Patient Info:\n"
         f"{formatted_data}\n\n"
-        "Use a professional and empathetic tone. Keep it concise and medically relevant."
+        "Use a clinical yet caring tone. Be concise."
     )
 
     # Call Gemini API
